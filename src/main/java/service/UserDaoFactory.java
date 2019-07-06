@@ -3,15 +3,22 @@ package service;
 import dao.UserDAO;
 
 public class UserDaoFactory {
-    private static UserDAO instance;
+
+    private static volatile UserDAO userDAO;
 
     private UserDaoFactory() {
     }
 
-    public static UserDAO getInstance() {
-        if (instance == null) {
-            instance = new UserDAO();
+    public static UserDAO getUserDAO() {
+        UserDAO localUserDao = userDAO;
+        if (localUserDao == null) {
+            synchronized (UserDAO.class) {
+                localUserDao = userDAO;
+                if (localUserDao == null) {
+                    userDAO = localUserDao = new UserDAO();
+                }
+            }
         }
-        return instance;
+        return localUserDao;
     }
 }

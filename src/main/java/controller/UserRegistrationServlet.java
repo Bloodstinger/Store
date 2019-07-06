@@ -12,10 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
 @WebServlet(value = "/register")
 public class UserRegistrationServlet extends HttpServlet {
-    private DaoPattern<User> userDao = UserDaoFactory.getInstance();
+
+    private DaoPattern<User> userDao = UserDaoFactory.getUserDAO();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

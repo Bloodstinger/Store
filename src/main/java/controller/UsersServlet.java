@@ -14,7 +14,9 @@ import java.util.List;
 
 @WebServlet(value = "/users")
 public class UsersServlet extends HttpServlet {
-    private static UserDAO userDAO = UserDaoFactory.getInstance();
+
+    private static UserDAO userDAO = UserDaoFactory.getUserDAO();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("users.jsp").forward(req, resp);

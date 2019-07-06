@@ -3,14 +3,22 @@ package service;
 import dao.ItemDAO;
 
 public class ItemDaoFactory {
-    private static ItemDAO instance;
+
+    private static volatile ItemDAO itemDAO;
+
     private ItemDaoFactory() {
     }
 
-    public static ItemDAO getInstance() {
-        if (instance == null) {
-            instance = new ItemDAO();
+    public static ItemDAO getItemDao() {
+        ItemDAO localItem = itemDAO;
+        if (localItem == null) {
+            synchronized (ItemDAO.class) {
+                localItem = itemDAO;
+                if (localItem == null) {
+                    itemDAO = localItem = new ItemDAO();
+                }
+            }
         }
-        return instance;
+        return localItem;
     }
 }

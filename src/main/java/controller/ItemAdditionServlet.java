@@ -14,11 +14,12 @@ import java.io.IOException;
 
 @WebServlet(value = "/items")
 public class ItemAdditionServlet extends HttpServlet {
-    private DaoPattern<Item> itemDao = ItemDaoFactory.getInstance();
+
+    private DaoPattern<Item> itemDao = ItemDaoFactory.getItemDao();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("AddItem.jsp").forward(req, resp);
+        req.getRequestDispatcher("addItem.jsp").forward(req, resp);
     }
 
     @Override
@@ -27,16 +28,14 @@ public class ItemAdditionServlet extends HttpServlet {
         String description = req.getParameter("description");
         double price = Double.valueOf(req.getParameter("price"));
 
-
         if (name.isEmpty() || description.isEmpty() || price < 0) {
             req.setAttribute("isEmpty", "All fields must be present and price must be greater than 0.");
-            req.getServletContext().getRequestDispatcher("/AddItem.jsp").forward(req, resp);
+            req.getServletContext().getRequestDispatcher("/addItem.jsp").forward(req, resp);
         } else {
             Item item = ItemDAO.createItem(name, description, price);
             itemDao.add(item);
             resp.setStatus(HttpServletResponse.SC_OK);
             resp.sendRedirect("/register");
         }
-
     }
 }
