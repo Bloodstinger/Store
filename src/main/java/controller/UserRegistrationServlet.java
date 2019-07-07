@@ -1,9 +1,7 @@
 package controller;
 
-import dao.DaoPattern;
-import dao.UserDAO;
-import model.User;
-import service.UserDaoFactory;
+import factory.service.UserServiceFactory;
+import service.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +13,7 @@ import java.io.IOException;
 @WebServlet(value = "/register")
 public class UserRegistrationServlet extends HttpServlet {
 
-    private DaoPattern<User> userDao = UserDaoFactory.getUserDAO();
+    private static UserService userService = UserServiceFactory.getUserService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -31,18 +29,16 @@ public class UserRegistrationServlet extends HttpServlet {
         if (email.isEmpty() || password.isEmpty() || repeatPassword.isEmpty()) {
             req.setAttribute("isValid", "All fields could not be empty");
             req.setAttribute("checkEmail", email);
-            req.getRequestDispatcher("register.jsp").forward(req, resp);
+            req.getRequestDispatcher("/register.jsp").forward(req, resp);
         } else {
             if (password.equals(repeatPassword)) {
-                User user = UserDAO.createUser(email, password);
-                userDao.add(user);
+                userService.addUser(email, password);
                 resp.setStatus(HttpServletResponse.SC_OK);
                 resp.sendRedirect("index.jsp");
-                System.out.println(user);
             } else {
                 req.setAttribute("checkEmail", email);
                 req.setAttribute("isValid", "The password is not valid, try again.");
-                req.getRequestDispatcher("register.jsp").forward(req, resp);
+                req.getRequestDispatcher("/register.jsp").forward(req, resp);
             }
         }
     }

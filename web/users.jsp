@@ -15,23 +15,29 @@
 <body>
 
 <div align="center">
-<% PrintWriter printWriter = response.getWriter();
-    printWriter.write("<div align='center'>");
-    printWriter.write("<h2> List of all users </h2>");
-    printWriter.write("<table border=\"1\"\n" +
-            "<tr>\n" +
-            "<th>Email</th>\n" +
-            "<th>Password</th>\n" +
-            "</tr>");
-    List<User> allUsers = (List<User>) request.getAttribute("allUsers");
-    for (User user : allUsers) {
-        printWriter.write("<tr>");
-        printWriter.write("<td>" + user.getEmail() + "</td>");
-        printWriter.write("<td>" + user.getPassword() + "</td>");
-        printWriter.write("</tr>");
-        printWriter.write("</div>");
-    };
-%>
+
+    <% PrintWriter printWriter = response.getWriter();
+        printWriter.write("<div align='center'>");
+        printWriter.write("<h2> List of all users</h2>");
+        printWriter.write("<table border=\"1\"\n" +
+                "<tr>\n" +
+                "<th>Email</th>\n" +
+                "<th>Password</th>\n" +
+                "</tr>");
+        List<User> allUsers = (List<User>) request.getAttribute("allUsers");
+        for (User user : allUsers) {
+            printWriter.write("<tr>");
+            printWriter.write("<td>" + user.getEmail() + "</td>");
+            printWriter.write("<td>" + user.getPassword() + "</td>");
+            printWriter.write("</tr>");
+            printWriter.write("</div>");
+        }
+        ;
+    %>
+    <a href="register"> Add new user.</a> <br>
+    <form method="post" action="items">
+        <button type="submit"> List of all items</button>
+    </form>
 </div>
 </body>
 </html>

@@ -1,8 +1,8 @@
 package controller;
 
-import factory.service.UserServiceFactory;
-import model.User;
-import service.UserService;
+import factory.service.ItemServiceFactory;
+import model.Item;
+import service.ItemService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,22 +12,22 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(value = "/users")
-public class UsersServlet extends HttpServlet {
+@WebServlet(value = "/items")
+public class ItemsServlet extends HttpServlet {
 
-    private static UserService userService = UserServiceFactory.getUserService();
+    private static ItemService itemService = ItemServiceFactory.getItemService();
 
-    List<User> allUsers = userService.getAll();
+    List<Item> allItems = itemService.getAll();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("allUsers", allUsers);
-        req.getRequestDispatcher("/users.jsp").forward(req, resp);
+        req.setAttribute("allItems", allItems);
+        req.getRequestDispatcher("/items.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("allUsers", allUsers);
-        req.getRequestDispatcher("/users.jsp").forward(req, resp);
+        req.setAttribute("allItems", allItems);
+        req.getRequestDispatcher("/items.jsp").forward(req, resp);
     }
 }
