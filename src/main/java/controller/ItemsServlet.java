@@ -20,15 +20,15 @@ public class ItemsServlet extends HttpServlet {
     List<Item> allItems = itemService.getAll();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
-            IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
         req.setAttribute("allItems", allItems);
         req.getRequestDispatcher("/items.jsp").forward(req, resp);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws
-            ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
         req.setAttribute("allItems", allItems);
         req.getRequestDispatcher("/items.jsp").forward(req, resp);
     }

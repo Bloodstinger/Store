@@ -20,15 +20,15 @@ public class UsersServlet extends HttpServlet {
     List<User> allUsers = userService.getAll();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
-            IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
         req.setAttribute("allUsers", allUsers);
         req.getRequestDispatcher("/users.jsp").forward(req, resp);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws
-            ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
         req.setAttribute("allUsers", allUsers);
         req.getRequestDispatcher("/users.jsp").forward(req, resp);
     }
