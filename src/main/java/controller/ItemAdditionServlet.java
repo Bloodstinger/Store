@@ -13,6 +13,8 @@ import java.io.IOException;
 @WebServlet(value = "/additem")
 public class ItemAdditionServlet extends HttpServlet {
 
+    private static final double DEFAULT_PRICE = 1;
+
     private static ItemService itemService = ItemServiceFactory.getItemService();
 
     @Override
@@ -25,7 +27,7 @@ public class ItemAdditionServlet extends HttpServlet {
         String name = req.getParameter("name");
         String description = req.getParameter("description");
         String postPrice = req.getParameter("price");
-        double price = 5;
+        double price = DEFAULT_PRICE;
 
         if (!postPrice.isEmpty()) {
             price = Double.parseDouble(postPrice);
