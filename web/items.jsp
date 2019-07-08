@@ -33,8 +33,7 @@
             printWriter.write("<td>" + item.getPrice() + "</td>");
             printWriter.write("</tr>");
             printWriter.write("</div>");
-        }
-        ;
+        };
     %>
     <form action="users" method="post">
         <button type="submit">Back to all users list</button>

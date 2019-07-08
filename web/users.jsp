@@ -31,8 +31,7 @@
             printWriter.write("<td>" + user.getPassword() + "</td>");
             printWriter.write("</tr>");
             printWriter.write("</div>");
-        }
-        ;
+        };
     %>
     <a href="register"> Add new user.</a> <br>
     <form method="post" action="items">
