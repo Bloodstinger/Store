@@ -10,26 +10,27 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
-@WebServlet(value = "/items")
-public class ItemsServlet extends HttpServlet {
+@WebServlet(value = "/itemEdit")
+public class ItemEditServlet extends HttpServlet {
 
     private final ItemService itemService = ItemServiceFactory.getItemService();
-
-    private List<Item> allItems = itemService.getAll();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        req.setAttribute("allItems", allItems);
-        req.getRequestDispatcher("/items.jsp").forward(req, resp);
+        req.getRequestDispatcher("itemEdit.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        req.setAttribute("allItems", allItems);
-        req.getRequestDispatcher("/items.jsp").forward(req, resp);
+        String id = req.getParameter("edit");
+        Item itemToEdit = itemService.getItem(Long.parseLong(id));
+        req.setAttribute("name", itemToEdit.getName());
+        req.setAttribute("description", itemToEdit.getDescription());
+        req.setAttribute("price", String.valueOf(itemToEdit.getPrice()));
+        req.getRequestDispatcher("/itemEdit.jsp").forward(req, resp);
+        //TODO: fix item addition. Item addition adds copy instead of editing.
     }
 }

@@ -9,4 +9,9 @@ public interface ItemService {
     void addItem(String name, String description, double price);
 
     List<Item> getAll();
+
+    Item getItem(Long id);
+
+    Item removeItem(Long id);
+
 }

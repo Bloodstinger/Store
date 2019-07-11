@@ -12,8 +12,9 @@
 </head>
 <body>
 <div align="center">
-    Sup bruh.
-    Enter your email and password.
+    Sup bruh.<br>
+    Enter your email and password.<br>
+    ${isValid}
     <form action="users" method="post">
         Email <input name="email" type="email"><br>
         Password <input name="password" type="password"><br>

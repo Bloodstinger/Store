@@ -15,7 +15,7 @@ public class ItemAdditionServlet extends HttpServlet {
 
     private static final double DEFAULT_PRICE = 1;
 
-    private static ItemService itemService = ItemServiceFactory.getItemService();
+    private final ItemService itemService = ItemServiceFactory.getItemService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -30,7 +30,6 @@ public class ItemAdditionServlet extends HttpServlet {
         String description = req.getParameter("description");
         String postPrice = req.getParameter("price");
         double price = DEFAULT_PRICE;
-
         if (!postPrice.isEmpty()) {
             price = Double.parseDouble(postPrice);
         }

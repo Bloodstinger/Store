@@ -14,17 +14,46 @@ public class UserServiceImpl implements UserService {
     private static long userID = IdCounter.userID;
 
     private User createUser(String email, String password) {
-        return new User(userID++, email, password);
+        if (!checkUser(email)) {
+            return new User(userID++, email, password);
+        }
+        return getUser(email);
     }
 
     @Override
     public void addUser(String email, String password) {
         User newUser = createUser(email, password);
-        userDao.add(newUser);
+        if (!checkUser(email)) {
+            userDao.add(newUser);
+        }
     }
 
     @Override
     public List<User> getAll() {
         return userDao.getAll();
+    }
+
+    @Override
+    public User getUser(Long id) {
+        return userDao.getUserById(id);
+    }
+
+    @Override
+    public User getUser(String email) {
+        return userDao.getUserByEmail(email);
+    }
+
+    @Override
+    public void removeUser(Long id) {
+        userDao.removeUser(id);
+    }
+
+    private boolean checkUser(String email) {
+        for (User user : userDao.getAll()) {
+            if (user.getEmail().equals(email)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

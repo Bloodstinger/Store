@@ -9,4 +9,8 @@ public interface ItemDao {
     void add(Item item);
 
     List<Item> getAll();
+
+    Item getItem(Long id);
+
+    Item removeItem(Long id);
 }

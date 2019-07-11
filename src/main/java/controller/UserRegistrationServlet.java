@@ -13,7 +13,7 @@ import java.io.IOException;
 @WebServlet(value = "/register")
 public class UserRegistrationServlet extends HttpServlet {
 
-    private static UserService userService = UserServiceFactory.getUserService();
+    private final UserService userService = UserServiceFactory.getUserService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -36,7 +36,7 @@ public class UserRegistrationServlet extends HttpServlet {
             if (password.equals(repeatPassword)) {
                 userService.addUser(email, password);
                 resp.setStatus(HttpServletResponse.SC_OK);
-                resp.sendRedirect("index.jsp");
+                req.getRequestDispatcher("/register.jsp").forward(req, resp);
             } else {
                 req.setAttribute("checkEmail", email);
                 req.setAttribute("isValid", "The password is not valid, try again.");
