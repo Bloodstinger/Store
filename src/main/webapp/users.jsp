@@ -10,10 +10,24 @@
 <html>
 <head>
     <title>List of all users #godmode</title>
+
+    <%
+        String message = null;
+        String sessionID = null;
+        Cookie[] cookies = request.getCookies();
+        if(cookies != null){
+            for(Cookie cookie : cookies){
+                if(cookie.getName().equals("message")) message = cookie.getValue();
+                if(cookie.getName().equals("JSESSIONID")) sessionID = cookie.getValue();
+            }
+        }
+    %>
 </head>
 <body>
 <div align="center">
     <h2> List of all users</h2>
+    <h3> <%= message%></h3>
+    <h3> Session ID =<%= sessionID%></h3>
     <a href="register"> Add new user.</a> <br>
     <a href="items">List of all items</a> <br>
     <table border="1">

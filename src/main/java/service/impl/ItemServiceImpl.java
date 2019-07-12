@@ -37,4 +37,11 @@ public class ItemServiceImpl implements ItemService {
     public Item removeItem(Long id) {
         return itemDao.removeItem(id);
     }
+
+    @Override
+    public void update(Long id, String name, String description, double price) {
+        Item newItem = new Item(id, name, description, price);
+        Item oldItem = getItem(id);
+        itemDao.replaceItem(oldItem, newItem);
+    }
 }

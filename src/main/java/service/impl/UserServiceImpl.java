@@ -21,6 +21,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean inDatabase(String email, String password) {
+        for (User user : userDao.getAll()) {
+            if (email.equals(user.getEmail()) && password.equals(user.getPassword())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
     public void addUser(String email, String password) {
         User newUser = createUser(email, password);
         if (!checkUser(email)) {

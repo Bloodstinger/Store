@@ -37,6 +37,18 @@ public class ItemDaoImpl implements ItemDao {
         throw new NoSuchElementException();
     }
 
+    @Override
+    public void replaceItem(Item oldItem, Item newItem) {
+        for (int i=1; i <= Storage.items.size(); i++) {
+            if (Storage.items.get(i).getId().equals(oldItem.getId())) {
+                Storage.items.remove(i);
+                Storage.items.add(i, newItem);
+                break;
+            }
+        }
+    }
+
+
     public void add(Item item) {
         Storage.items.add(item);
     }

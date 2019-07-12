@@ -30,7 +30,8 @@ public class ItemEditServlet extends HttpServlet {
         req.setAttribute("name", itemToEdit.getName());
         req.setAttribute("description", itemToEdit.getDescription());
         req.setAttribute("price", String.valueOf(itemToEdit.getPrice()));
-        req.getRequestDispatcher("/itemEdit.jsp").forward(req, resp);
+        req.setAttribute("id", id);
+        req.getRequestDispatcher("/additem").forward(req, resp);
         //TODO: fix item addition. Item addition adds copy instead of editing.
     }
 }

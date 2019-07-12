@@ -13,4 +13,6 @@ public interface ItemDao {
     Item getItem(Long id);
 
     Item removeItem(Long id);
+
+    void replaceItem(Item oldItem, Item newItem);
 }

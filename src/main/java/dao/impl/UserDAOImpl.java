@@ -44,6 +44,10 @@ public class UserDAOImpl implements UserDao {
         }
     }
 
+    public void remove() {
+
+    }
+
     public void add(User user) {
         Storage.users.add(user);
     }

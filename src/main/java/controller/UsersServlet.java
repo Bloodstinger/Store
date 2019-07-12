@@ -6,9 +6,11 @@ import service.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -31,20 +33,26 @@ public class UsersServlet extends HttpServlet {
             throws ServletException, IOException {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-        boolean inDatabase = false;
 
         userService.addUser("root@localhost", "root");
 
-        for (int i = 0; i < allUsers.size(); i++) {
-            User user = allUsers.get(i);
-            if (email.equals(user.getEmail()) && password.equals(user.getPassword())) {
-                inDatabase = true;
-                break;
+        if (userService.inDatabase(email, password)) {
+
+            HttpSession oldSession = req.getSession(false);
+            if (oldSession != null) {
+                oldSession.invalidate();
             }
-        }
-        if (inDatabase) {
+            HttpSession newSession = req.getSession(true);
+
             req.setAttribute("allUsers", allUsers);
-            req.getRequestDispatcher("/users.jsp").forward(req, resp);
+
+            newSession.setMaxInactiveInterval(300);
+
+            Cookie message = new Cookie("message", "Welcome!");
+            message.setHttpOnly(true);
+
+            resp.addCookie(message);
+            resp.sendRedirect("/users.jsp");
         } else {
             req.setAttribute("email", email);
             resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
