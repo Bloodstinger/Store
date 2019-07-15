@@ -17,18 +17,10 @@ public class ItemsServlet extends HttpServlet {
 
     private final ItemService itemService = ItemServiceFactory.getItemService();
 
-    private List<Item> allItems = itemService.getAll();
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        req.setAttribute("allItems", allItems);
-        req.getRequestDispatcher("/items.jsp").forward(req, resp);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+        List<Item> allItems = itemService.getAll();
         req.setAttribute("allItems", allItems);
         req.getRequestDispatcher("/items.jsp").forward(req, resp);
     }

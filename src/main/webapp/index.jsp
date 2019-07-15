@@ -15,7 +15,7 @@
     Sup bruh.<br>
     Enter your email and password.<br>
     ${isValid}
-    <form action="/admin/users" method="post">
+    <form action="/login" method="post">
         Email <input name="email" type="email"><br>
         Password <input name="password" type="password"><br>
         <button type="submit"> Sign in</button>

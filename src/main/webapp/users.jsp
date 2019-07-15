@@ -14,8 +14,8 @@
 <body>
 <div align="center">
     <h2> List of all users</h2>
-    <a href="register"> Add new user.</a> <br>
-    <a href="items">List of all items</a> <br>
+    <a href="/register.jsp"> Add new user.</a> <br>
+    <a href="/items.jsp">List of all items</a> <br>
     <table border="1">
         <tr>Email</tr>
         <tr> Password</tr>

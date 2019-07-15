@@ -18,31 +18,31 @@ public class ItemDaoImpl implements ItemDao {
 
     @Override
     public Item getItem(Long id) {
-        for (Item item : Storage.items) {
-            if (item.getId().equals(id)) {
-                return item;
-            }
-        }
-        throw new NoSuchElementException();
+        return Storage
+                .items
+                .stream()
+                .filter(item -> item.getId().equals(id))
+                .findFirst()
+                .get();
     }
 
     @Override
     public Item removeItem(Long id) {
-        for (Item item : Storage.items) {
-            if (item.getId().equals(id)) {
-                Storage.items.remove(item);
-                return item;
-            }
+        Item itemToRemove = Storage
+                .items
+                .stream()
+                .filter(item -> item.getId().equals(id))
+                .findFirst()
+                .get();
+        Storage.items.remove(itemToRemove);
+        return itemToRemove;
         }
-        throw new NoSuchElementException();
-    }
 
     @Override
     public void replaceItem(Item oldItem, Item newItem) {
         Item replacement = Storage.items
                 .stream()
-                .filter(
-                        item -> item.getId().equals(oldItem.getId()))
+                .filter(item -> item.getId().equals(oldItem.getId()))
                 .findFirst()
                 .get();
         replacement.setName(newItem.getName());

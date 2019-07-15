@@ -16,7 +16,10 @@
 <body>
 <div align="center">
     <h2> List of all items</h2>
-    <a href="additem">Add new item</a>
+    <a href="additem">Add new item</a> <br>
+    <form>
+    <input formmethod="get" formaction="/admin/users" type="submit" value="Back to all users">
+    </form>
     <table border="1">
         <tr>
             <th>Name</th>

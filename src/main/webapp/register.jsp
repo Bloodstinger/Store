@@ -13,7 +13,7 @@
 <body>
 <div align="center">
     ${isValid}
-    <form action="register" method="post">
+    <form action="/admin/register" method="post">
         Email <input name="email" type="email" placeholder="Enter your email..."
                      value="${checkEmail}"> <br>
         Password <input name="password" type="password"><br>
@@ -22,7 +22,7 @@
         <input type="radio" value="user" name="role"> User<br>
 
         <button type="submit"> Register</button>
-        <button type="submit" formaction="users" formmethod="get">Back to all users list</button>
+        <button type="submit" formaction="/admin/users" formmethod="get">Back to all users list</button>
     </form>
 </div>
 </body>

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(value = "/register")
+@WebServlet(value = "/admin/register")
 public class UserRegistrationServlet extends HttpServlet {
 
     private final UserService userService = UserServiceFactory.getUserService();
@@ -18,7 +18,7 @@ public class UserRegistrationServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        req.getRequestDispatcher("register.jsp").forward(req, resp);
+        req.getRequestDispatcher("/register.jsp").forward(req, resp);
     }
 
     @Override

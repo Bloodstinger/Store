@@ -29,7 +29,6 @@ public class ItemAdditionServlet extends HttpServlet {
         String name = req.getParameter("name");
         String description = req.getParameter("description");
         String postPrice = req.getParameter("price");
-//        boolean hasID = !req.getParameter("id").isEmpty();
         double price = DEFAULT_PRICE;
         if (!postPrice.isEmpty()) {
             price = Double.parseDouble(postPrice);
@@ -38,9 +37,6 @@ public class ItemAdditionServlet extends HttpServlet {
             req.setAttribute("isValid",
                     "All fields must be present and price must be greater than 0.");
             req.getServletContext().getRequestDispatcher("/additem.jsp").forward(req, resp);
-//        } else if (hasID) {
-//            Long id = Long.parseLong(req.getParameter("id"));
-//            itemService.update(id, name, description, price);
         } else {
             itemService.addItem(name, description, price);
             resp.setStatus(HttpServletResponse.SC_OK);

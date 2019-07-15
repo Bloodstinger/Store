@@ -19,7 +19,7 @@ ID : ${id}
     Price <input type="number" name="price" value="${price}">
     <input type="hidden" name="id" value="${id}">
     <input type="submit" value="Confirm"> <br>
-    <input type="submit" formaction="/items" value="Back to all items">
+    <input type="submit" formaction="/items" formmethod="get" value="Back to all items">
 </form>
 </body>
 </html>

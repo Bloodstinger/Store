@@ -17,7 +17,7 @@
     Description <input type="text" name="description"><br>
     Price <input type="number" name="price" value="0"><br>
     <input type="submit" value="Add new item "> <br>
-    <input type="submit" formaction="/items" value="List of all items">
+    <input type="submit" formaction="/items" formmethod="get" value="List of all items">
 </form>
 </body>
 </html>
