@@ -6,15 +6,15 @@ import service.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
-@WebServlet(value = "/users")
+@WebServlet(value = "/admin/users")
 public class UsersServlet extends HttpServlet {
 
     private final UserService userService = UserServiceFactory.getUserService();
@@ -25,7 +25,7 @@ public class UsersServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         req.setAttribute("allUsers", allUsers);
-        req.getRequestDispatcher("/users.jsp").forward(req, resp);
+        req.getRequestDispatcher("/admin/users").forward(req, resp);
     }
 
     @Override
@@ -33,30 +33,19 @@ public class UsersServlet extends HttpServlet {
             throws ServletException, IOException {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
+        Optional<User> optUser = Optional.ofNullable(userService.getUser(email));
 
-        userService.addUser("root@localhost", "root");
+        if (optUser.isPresent() && password.equals(userService.getUser(email).getPassword())) {
 
-        if (userService.inDatabase(email, password)) {
+            HttpSession session = req.getSession();
+            session.setAttribute("user", optUser.get());
 
-            HttpSession oldSession = req.getSession(false);
-            if (oldSession != null) {
-                oldSession.invalidate();
-            }
-            HttpSession newSession = req.getSession(true);
-
-            req.setAttribute("allUsers", allUsers);
-
-            newSession.setMaxInactiveInterval(300);
-
-            Cookie message = new Cookie("message", "Welcome!");
-            message.setHttpOnly(true);
-
-            resp.addCookie(message);
-            resp.sendRedirect("/users.jsp");
+            resp.sendRedirect("/admin/users");
         } else {
             req.setAttribute("email", email);
+            req.setAttribute("isValid", "Username or password is not correct");
             resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            req.getRequestDispatcher("/index.jsp").forward(req, resp);
+            req.getRequestDispatcher("/").forward(req, resp);
         }
     }
 }

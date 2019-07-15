@@ -11,10 +11,13 @@
     <title>Edit item</title>
 </head>
 <body>
-<form action="/additem" method="post">
+<h4> Edit product</h4> <br>
+ID : ${id}
+<form action="/itemEdit" method="post">
     Name <input type="text" name="name" value="${name}"> <br>
     Description <input type="text" name="description" value="${description}"/><br>
     Price <input type="number" name="price" value="${price}">
+    <input type="hidden" name="id" value="${id}">
     <input type="submit" value="Confirm"> <br>
     <input type="submit" formaction="/items" value="Back to all items">
 </form>

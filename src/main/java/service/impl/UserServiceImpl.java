@@ -13,9 +13,9 @@ public class UserServiceImpl implements UserService {
     private static UserDao userDao = UserDaoFactory.getUserDAO();
     private static long userID = IdCounter.userID;
 
-    private User createUser(String email, String password) {
+    private User createUser(String email, String password, String role) {
         if (!checkUser(email)) {
-            return new User(userID++, email, password);
+            return new User(userID++, email, password, role);
         }
         return getUser(email);
     }
@@ -31,8 +31,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addUser(String email, String password) {
-        User newUser = createUser(email, password);
+    public void addUser(String email, String password, String role) {
+        User newUser = createUser(email, password, role);
         if (!checkUser(email)) {
             userDao.add(newUser);
         }
@@ -56,6 +56,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void removeUser(Long id) {
         userDao.removeUser(id);
+    }
+
+    @Override
+    public void update(User oldUser, User newUser) {
+        userDao.replaceUser(oldUser, newUser);
     }
 
     private boolean checkUser(String email) {

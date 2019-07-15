@@ -13,11 +13,12 @@
 <body>
 <div align="center">
     ${isValid}
-    <form action="register" method="post">
+    <form action="userEdit" method="post">
         Email <input name="email" type="email" placeholder="Enter your email..."
                      value="${email}"><br>
         New password <input name="password" type="password"> <br>
         Repeat new password <input name="repeatPassword" type="password"><br>
+        <input type="hidden" name="id" value="<%= request.getParameter("id")%>">
         <button type="submit"> Submit</button>
         <button type="submit" formaction="users" formmethod="get"> Back to users list</button>
     </form>

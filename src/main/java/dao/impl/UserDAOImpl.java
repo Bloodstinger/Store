@@ -9,6 +9,11 @@ import java.util.NoSuchElementException;
 
 public class UserDAOImpl implements UserDao {
 
+    static {
+        Storage.users.add(new User(
+                9999L,"root@localhost", "root", "admin"));
+    }
+
     public List<User> getAll() {
         return Storage.users;
     }
@@ -44,8 +49,15 @@ public class UserDAOImpl implements UserDao {
         }
     }
 
-    public void remove() {
-
+    @Override
+    public void replaceUser(User oldUser, User newUser) {
+        User replacement = Storage.users.stream()
+                .filter(
+                        user -> user.getId().equals(oldUser.getId()))
+                .findFirst()
+                .get();
+        replacement.setEmail(newUser.getEmail());
+        replacement.setPassword(newUser.getPassword());
     }
 
     public void add(User user) {

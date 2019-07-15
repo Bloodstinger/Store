@@ -39,13 +39,15 @@ public class ItemDaoImpl implements ItemDao {
 
     @Override
     public void replaceItem(Item oldItem, Item newItem) {
-        for (int i=1; i <= Storage.items.size(); i++) {
-            if (Storage.items.get(i).getId().equals(oldItem.getId())) {
-                Storage.items.remove(i);
-                Storage.items.add(i, newItem);
-                break;
-            }
-        }
+        Item replacement = Storage.items
+                .stream()
+                .filter(
+                        item -> item.getId().equals(oldItem.getId()))
+                .findFirst()
+                .get();
+        replacement.setName(newItem.getName());
+        replacement.setDescription(newItem.getDescription());
+        replacement.setPrice(newItem.getPrice());
     }
 
 

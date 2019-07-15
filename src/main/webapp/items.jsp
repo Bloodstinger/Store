@@ -22,17 +22,20 @@
             <th>Name</th>
             <th>Description</th>
             <th>Price</th>
+            <th>ID</th>
             <c:forEach var="item" items="${allItems}">
         <tr>
             <td>${item.getName()}</td>
             <td>${item.getDescription()}</td>
             <td>${item.getPrice()}</td>
+            <td>${item.getId()}</td>
             <td>
                 <form action="itemDelete" method="post">
                     <button name="delete" type="submit" value="${item.getId()}">Delete</button>
                 </form>
-                <form action="itemEdit" method="post">
-                    <button name="edit" type="submit" value="${item.getId()}"> Edit</button>
+                <form action="itemEdit" method="get">
+                    <input type="hidden" name="id" value="${item.getId()}">
+                    <button type="submit"> Edit</button>
                 </form>
             </td>
         </tr>

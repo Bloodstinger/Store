@@ -19,19 +19,23 @@ public class ItemEditServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        req.getRequestDispatcher("itemEdit.jsp").forward(req, resp);
+        Long id = Long.valueOf(req.getParameter("id"));
+        req.setAttribute("id", id);
+        req.setAttribute("name", itemService.getItem(id).getName());
+        req.setAttribute("description", itemService.getItem(id).getDescription());
+        req.setAttribute("price", itemService.getItem(id).getPrice());
+        req.getRequestDispatcher("/itemEdit.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        String id = req.getParameter("edit");
-        Item itemToEdit = itemService.getItem(Long.parseLong(id));
-        req.setAttribute("name", itemToEdit.getName());
-        req.setAttribute("description", itemToEdit.getDescription());
-        req.setAttribute("price", String.valueOf(itemToEdit.getPrice()));
-        req.setAttribute("id", id);
-        req.getRequestDispatcher("/additem").forward(req, resp);
-        //TODO: fix item addition. Item addition adds copy instead of editing.
+        Long id = Long.valueOf(req.getParameter("id"));
+        String name = req.getParameter("name");
+        String description = req.getParameter("description");
+        Double price = Double.valueOf(req.getParameter("price"));
+        Item newItem = new Item(id, name, description, price);
+        itemService.update(itemService.getItem(id), newItem);
+        resp.sendRedirect("/items");
     }
 }

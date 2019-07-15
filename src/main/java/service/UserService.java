@@ -8,7 +8,7 @@ public interface UserService {
 
     boolean inDatabase(String email, String password);
 
-    void addUser(String email, String password);
+    void addUser(String email, String password, String role);
 
     List<User> getAll();
 
@@ -17,4 +17,6 @@ public interface UserService {
     User getUser(String email);
 
     void removeUser(Long id);
+
+    void update(User oldUser, User newUser);
 }

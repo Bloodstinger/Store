@@ -39,9 +39,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public void update(Long id, String name, String description, double price) {
-        Item newItem = new Item(id, name, description, price);
-        Item oldItem = getItem(id);
+    public void update(Item oldItem, Item newItem) {
         itemDao.replaceItem(oldItem, newItem);
     }
 }

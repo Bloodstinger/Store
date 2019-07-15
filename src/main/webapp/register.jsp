@@ -18,6 +18,9 @@
                      value="${checkEmail}"> <br>
         Password <input name="password" type="password"><br>
         Repeat password <input name="repeatPassword" type="password"><br>
+        Role <br><input type="radio" value="admin" name="role"> Admin<br>
+        <input type="radio" value="user" name="role"> User<br>
+
         <button type="submit"> Register</button>
         <button type="submit" formaction="users" formmethod="get">Back to all users list</button>
     </form>

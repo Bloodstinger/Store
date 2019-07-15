@@ -27,6 +27,7 @@ public class UserRegistrationServlet extends HttpServlet {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
         String repeatPassword = req.getParameter("repeatPassword");
+        String role = req.getParameter("role");
 
         if (email.isEmpty() || password.isEmpty() || repeatPassword.isEmpty()) {
             req.setAttribute("isValid", "All fields could not be empty");
@@ -34,7 +35,7 @@ public class UserRegistrationServlet extends HttpServlet {
             req.getRequestDispatcher("/register.jsp").forward(req, resp);
         } else {
             if (password.equals(repeatPassword)) {
-                userService.addUser(email, password);
+                userService.addUser(email, password, role);
                 resp.setStatus(HttpServletResponse.SC_OK);
                 req.getRequestDispatcher("/register.jsp").forward(req, resp);
             } else {
