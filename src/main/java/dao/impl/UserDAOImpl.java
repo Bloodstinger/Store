@@ -13,6 +13,10 @@ public class UserDAOImpl implements UserDao {
         Storage.users.add(new User(
                 9999L,"root@localhost", "root", "admin"));
     }
+    static {
+        Storage.users.add(new User(
+                9998L,"test@localhost", "test", "user"));
+    }
 
     public List<User> getAll() {
         return Storage.users;

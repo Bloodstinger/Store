@@ -8,12 +8,14 @@ public class User {
     private String email;
     private String password;
     private String role;
+    private ShoppingCart shoppingCart;
 
     public User(Long id, String email, String password, String role) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.role = role;
+        shoppingCart = new ShoppingCart();
     }
 
     public Long getId() {
@@ -44,14 +46,20 @@ public class User {
         return password;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", role='" + role + '\'' +
-                '}';
+    public void addInCart(Item item) {
+        shoppingCart.add(item);
+    }
+
+    public void removeFromCart(Item item) {
+        shoppingCart.remove(item);
+    }
+
+    public ShoppingCart getShoppingCart() {
+        return this.shoppingCart;
+    }
+
+    public int cartSize() {
+        return shoppingCart.size();
     }
 
     @Override
@@ -62,11 +70,23 @@ public class User {
         return Objects.equals(id, user.id) &&
                 Objects.equals(email, user.email) &&
                 Objects.equals(password, user.password) &&
-                Objects.equals(role, user.role);
+                Objects.equals(role, user.role) &&
+                Objects.equals(shoppingCart, user.shoppingCart);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, password, role);
+        return Objects.hash(id, email, password, role, shoppingCart);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
+                ", shoppingCart=" + shoppingCart +
+                '}';
     }
 }

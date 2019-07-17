@@ -12,16 +12,25 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(value = "/items")
-public class ItemsServlet extends HttpServlet {
+@WebServlet("/admin/items")
+public class AdminItemsServlet extends HttpServlet {
 
     private final ItemService itemService = ItemServiceFactory.getItemService();
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         List<Item> allItems = itemService.getAll();
         req.setAttribute("allItems", allItems);
-        req.getRequestDispatcher("/items.jsp").forward(req, resp);
+        req.getRequestDispatcher("/admin_items.jsp").forward(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        List<Item> allItems = itemService.getAll();
+        req.setAttribute("allItems", allItems);
+        req.getRequestDispatcher("/admin_items.jsp").forward(req, resp);
     }
 }

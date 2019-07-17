@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(value = "/userEdit")
+@WebServlet(value = "/admin/userEdit")
 public class UserEditServlet extends HttpServlet {
 
     private final UserService userService = UserServiceFactory.getUserService();

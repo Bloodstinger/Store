@@ -1,6 +1,8 @@
 package controller;
 
 import factory.service.ItemServiceFactory;
+import model.Item;
+import model.User;
 import service.ItemService;
 
 import javax.servlet.ServletException;
@@ -10,17 +12,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(value = "/admin/itemDelete")
-public class ItemDeleteServlet extends HttpServlet {
+@WebServlet("/user/buy")
+public class UserAddToCartServlet extends HttpServlet {
 
     private final ItemService itemService = ItemServiceFactory.getItemService();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        String id = req.getParameter("delete");
-        itemService.removeItem(Long.parseLong(id));
-        resp.setStatus(HttpServletResponse.SC_OK);
-        resp.sendRedirect("/admin/items");
+        User user = (User) req.getSession().getAttribute("user");
+        Long itemId = Long.valueOf(req.getParameter("id"));
+        Item itemToAdd = itemService.getItem(itemId);
+        user.addInCart(itemToAdd);
+        req.setAttribute("count", user.cartSize());
+        req.getRequestDispatcher("/user/items").forward(req, resp);
     }
 }
