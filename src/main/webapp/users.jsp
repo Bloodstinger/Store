@@ -9,13 +9,15 @@
 <html>
 <head>
     <title>List of all users #godmode</title>
-
 </head>
 <body>
 <div align="center">
     <h2> List of all users</h2>
     <a href="/register.jsp"> Add new user.</a> <br>
-    <a href="/items.jsp">List of all items</a> <br>
+    <a href="/admin/items">List of all items</a> <br>
+    <form action="/logout" method="post">
+        <button type="submit">Logout</button>
+    </form>
     <table border="1">
         <tr>Email</tr>
         <tr> Password</tr>

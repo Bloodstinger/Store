@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/admin/*"})
-public class AdminFilter implements Filter {
+@WebFilter(urlPatterns = "/user/*")
+public class UsersFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -26,10 +26,10 @@ public class AdminFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
         User userFromSession = (User) req.getSession().getAttribute("user");
-        if (userFromSession != null && userFromSession.getRole().equals("admin")) {
+        if (userFromSession != null && !userFromSession.getRole().isEmpty()) {
             chain.doFilter(req, resp);
         } else {
-            resp.sendRedirect("/user/items");
+            resp.sendRedirect("/");
         }
     }
 

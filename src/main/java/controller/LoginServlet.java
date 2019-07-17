@@ -26,9 +26,14 @@ public class LoginServlet extends HttpServlet {
         if (optUser.isPresent() && optUser.get().getPassword().equals(password)) {
             HttpSession session = req.getSession();
             session.setAttribute("user", optUser.get());
-            resp.sendRedirect("/admin/users");
+            if (optUser.get().getRole().equals("admin")) {
+                resp.sendRedirect("/admin/users");
+            } else {
+                req.setAttribute("count", optUser.get().cartSize());
+                req.getRequestDispatcher("/user/items").forward(req, resp);
+            }
         } else {
-            resp.sendRedirect("index.jsp");
+            resp.sendRedirect("/index.jsp");
         }
     }
 }

@@ -8,19 +8,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(value = "/admin/userDelete")
-public class UserDeleteServlet extends HttpServlet {
+@WebServlet("/logout")
+public class LogoutServlet extends HttpServlet {
 
     private final UserService userService = UserServiceFactory.getUserService();
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-        String id = req.getParameter("delete");
-        userService.removeUser(Long.parseLong(id));
-        resp.setStatus(HttpServletResponse.SC_OK);
-        resp.sendRedirect("/admin/users");
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("/index.jsp").include(req, resp);
+        HttpSession session = req.getSession();
+        session.invalidate();
     }
 }
