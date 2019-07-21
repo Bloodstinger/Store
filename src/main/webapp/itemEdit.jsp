@@ -13,13 +13,13 @@
 <body>
 <h4> Edit product</h4> <br>
 ID : ${id}
-<form action="/itemEdit" method="post">
+<form action="/admin/itemEdit" method="post">
     Name <input type="text" name="name" value="${name}"> <br>
     Description <input type="text" name="description" value="${description}"/><br>
-    Price <input type="number" name="price" value="${price}">
+    Price <input type="number" step="0.01" name="price" value="${price}">
     <input type="hidden" name="id" value="${id}">
     <input type="submit" value="Confirm"> <br>
-    <input type="submit" formaction="/items" formmethod="get" value="Back to all items">
+    <input type="submit" formaction="/admin/items" formmethod="get" value="Back to all items">
 </form>
 </body>
 </html>

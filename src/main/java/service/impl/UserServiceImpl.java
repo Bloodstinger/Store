@@ -3,7 +3,6 @@ package service.impl;
 import dao.UserDao;
 import factory.dao.UserDaoFactory;
 import model.User;
-import service.IdCounter;
 import service.UserService;
 
 import java.util.List;
@@ -11,14 +10,6 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private static UserDao userDao = UserDaoFactory.getUserDAO();
-    private static long userID = IdCounter.userID;
-
-    private User createUser(String email, String password, String role) {
-        if (!checkUser(email)) {
-            return new User(userID++, email, password, role);
-        }
-        return getUser(email);
-    }
 
     @Override
     public boolean inDatabase(String email, String password) {
@@ -32,10 +23,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addUser(String email, String password, String role) {
-        User newUser = createUser(email, password, role);
-        if (!checkUser(email)) {
-            userDao.add(newUser);
-        }
+        userDao.add(new User(email, password, role));
     }
 
     @Override
@@ -63,12 +51,4 @@ public class UserServiceImpl implements UserService {
         userDao.replaceUser(oldUser, newUser);
     }
 
-    private boolean checkUser(String email) {
-        for (User user : userDao.getAll()) {
-            if (user.getEmail().equals(email)) {
-                return true;
-            }
-        }
-        return false;
-    }
 }

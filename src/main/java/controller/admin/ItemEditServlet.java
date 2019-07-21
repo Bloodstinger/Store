@@ -1,4 +1,4 @@
-package controller;
+package controller.admin;
 
 import factory.service.ItemServiceFactory;
 import model.Item;
@@ -11,10 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(value = "/itemEdit")
+@WebServlet(value = "/admin/itemEdit")
 public class ItemEditServlet extends HttpServlet {
 
-    private final ItemService itemService = ItemServiceFactory.getItemService();
+    private static final ItemService itemService = ItemServiceFactory.getItemService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -36,6 +36,6 @@ public class ItemEditServlet extends HttpServlet {
         Double price = Double.valueOf(req.getParameter("price"));
         Item newItem = new Item(id, name, description, price);
         itemService.update(itemService.getItem(id), newItem);
-        resp.sendRedirect("/items");
+        resp.sendRedirect("/admin/items");
     }
 }

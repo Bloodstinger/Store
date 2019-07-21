@@ -13,7 +13,7 @@
 <body>
 <div align="center">
     ${isValid}
-    <form action="userEdit" method="post">
+    <form action="/admin/userEdit" method="post">
         Email <input name="email" type="email" placeholder="Enter your email..."
                      value="${email}"><br>
         New password <input name="password" type="password"> <br>

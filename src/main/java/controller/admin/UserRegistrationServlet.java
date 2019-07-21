@@ -1,4 +1,4 @@
-package controller;
+package controller.admin;
 
 import factory.service.UserServiceFactory;
 import service.UserService;
@@ -13,7 +13,7 @@ import java.io.IOException;
 @WebServlet(value = "/admin/register")
 public class UserRegistrationServlet extends HttpServlet {
 
-    private final UserService userService = UserServiceFactory.getUserService();
+    private static final UserService userService = UserServiceFactory.getUserService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -29,7 +29,7 @@ public class UserRegistrationServlet extends HttpServlet {
         String repeatPassword = req.getParameter("repeatPassword");
         String role = req.getParameter("role");
 
-        if (email.isEmpty() || password.isEmpty() || repeatPassword.isEmpty()) {
+        if (email.isEmpty() || password.isEmpty() || repeatPassword.isEmpty() || role == null) {
             req.setAttribute("isValid", "All fields could not be empty");
             req.setAttribute("checkEmail", email);
             req.getRequestDispatcher("/register.jsp").forward(req, resp);
