@@ -1,4 +1,4 @@
-package controller;
+package controller.admin;
 
 import factory.service.ItemServiceFactory;
 import service.ItemService;
@@ -15,7 +15,7 @@ public class ItemAdditionServlet extends HttpServlet {
 
     private static final double DEFAULT_PRICE = 1;
 
-    private final ItemService itemService = ItemServiceFactory.getItemService();
+    private static final ItemService itemService = ItemServiceFactory.getItemService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

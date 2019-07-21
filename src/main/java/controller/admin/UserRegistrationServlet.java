@@ -1,4 +1,4 @@
-package controller;
+package controller.admin;
 
 import factory.service.UserServiceFactory;
 import service.UserService;
@@ -13,7 +13,7 @@ import java.io.IOException;
 @WebServlet(value = "/admin/register")
 public class UserRegistrationServlet extends HttpServlet {
 
-    private final UserService userService = UserServiceFactory.getUserService();
+    private static final UserService userService = UserServiceFactory.getUserService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

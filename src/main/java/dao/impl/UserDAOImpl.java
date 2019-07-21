@@ -1,71 +1,119 @@
 package dao.impl;
 
 import dao.UserDao;
-import db.Storage;
 import model.User;
+import org.apache.log4j.Logger;
+import utils.DbConnector;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 public class UserDAOImpl implements UserDao {
 
-    static {
-        Storage.users.add(new User(
-                9999L,"root@localhost", "root", "admin"));
-    }
-    static {
-        Storage.users.add(new User(
-                9998L,"test@localhost", "test", "user"));
-    }
+    Logger logger = Logger.getLogger(UserDAOImpl.class);
 
     public List<User> getAll() {
-        return Storage.users;
+        List<User> userList = new ArrayList<>();
+        try (Connection connection = DbConnector.connect()) {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM users");
+
+            while (resultSet.next()) {
+                User userFromDB = new User(
+                        resultSet.getLong("id"),
+                        resultSet.getString("email"),
+                        resultSet.getString("password"),
+                        resultSet.getString("role"));
+                userList.add(userFromDB);
+            }
+        } catch (SQLException e) {
+            logger.error("Problem with getting all users from DB", e);
+        }
+        return userList;
     }
 
     @Override
     public User getUserById(Long id) {
-        for (User user : Storage.users) {
-            if (user.getId().equals(id)) {
-                return user;
+        try (Connection connection = DbConnector.connect()) {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM users WHERE id=" + id);
+
+            while (resultSet.next()) {
+                User userFromDb = new User(
+                        resultSet.getLong("id"),
+                        resultSet.getString("email"),
+                        resultSet.getString("password"),
+                        resultSet.getString("role")
+                );
+                return userFromDb;
             }
+        } catch (SQLException e) {
+            logger.error("Problem with getting user by id.", e);
         }
-        throw new NoSuchElementException();
+        throw new NoSuchElementException("User does not exist");
     }
 
     @Override
     public User getUserByEmail(String email) {
-        for (User user : Storage.users) {
-            if (user.getEmail().equals(email)) {
-                return user;
+        try (Connection connection = DbConnector.connect()) {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet =
+                    statement.executeQuery("SELECT * FROM users WHERE email='" + email + "'");
+
+            while (resultSet.next()) {
+                User userFromDb = new User(
+                        resultSet.getLong("id"),
+                        resultSet.getString("email"),
+                        resultSet.getString("password"),
+                        resultSet.getString("role")
+                );
+                return userFromDb;
             }
+
+        } catch (SQLException e) {
+            logger.error("Problem with getting user by email.", e);
         }
         throw new NoSuchElementException();
     }
 
     @Override
     public void removeUser(Long id) {
-        for (int i = 0; i < Storage.users.size(); i++) {
-            User user = Storage.users.get(i);
-            if (user.getId().equals(id)) {
-                Storage.users.remove(user);
-                break;
-            }
+        try (Connection connection = DbConnector.connect()) {
+            Statement statement = connection.createStatement();
+            String sql = String.format("DELETE FROM users WHERE id=%d", id);
+            statement.execute(sql);
+        } catch (SQLException e) {
+            logger.error("Problem with removing user", e);
         }
     }
 
     @Override
     public void replaceUser(User oldUser, User newUser) {
-        User replacement = Storage.users.stream()
-                .filter(
-                        user -> user.getId().equals(oldUser.getId()))
-                .findFirst()
-                .get();
-        replacement.setEmail(newUser.getEmail());
-        replacement.setPassword(newUser.getPassword());
+        try (Connection connection = DbConnector.connect()) {
+            Statement statement = connection.createStatement();
+            String sql = String.format("UPDATE users SET email = '%s', password ='%s' " +
+                    "WHERE id = %d;", newUser.getEmail(), newUser.getPassword(), oldUser.getId());
+            statement.execute(sql);
+        } catch (SQLException e) {
+            logger.error("Problem with updating user");
+        }
     }
 
+    @Override
     public void add(User user) {
-        Storage.users.add(user);
+        try (Connection connection = DbConnector.connect()) {
+            String sql = String.format("INSERT INTO users (email, password, role) " +
+                            "VALUES ('%s', '%s', '%s')",
+                    user.getEmail(), user.getPassword(), user.getRole());
+            Statement statement = connection.createStatement();
+            statement.execute(sql);
+        } catch (SQLException e) {
+            logger.error("Problem with adding user.", e);
+        }
     }
 }
-

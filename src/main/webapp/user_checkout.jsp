@@ -16,7 +16,7 @@
     <form method="post" action="/user/checkout">
         <button type="submit">Confirm</button>
     </form>
-    Total : <c:set var="total" value="${0}"/>
+    Total : ${totalPrice}
     <table border="1">
         <tr>
             <th>Name</th>
@@ -27,7 +27,6 @@
             <td>${item.getName()}</td>
             <td>${item.getDescription()}</td>
             <td>${item.getPrice()}</td>
-        <c:set var="total" value="${total + item.getPrice()}"/>
         </tr>
         </c:forEach>
         </tr>

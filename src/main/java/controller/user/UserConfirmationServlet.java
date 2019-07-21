@@ -1,4 +1,4 @@
-package controller;
+package controller.user;
 
 import utils.ConfirmCode;
 import utils.SendEmail;
@@ -11,14 +11,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet("/user/confirmation")
-public class ConfirmationServlet extends HttpServlet {
+public class UserConfirmationServlet extends HttpServlet {
 
     private String email;
     private String confirmCode;
     private String address;
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
         email = req.getParameter("email");
         confirmCode = ConfirmCode.code();
         address = req.getParameter("address");
@@ -31,7 +32,8 @@ public class ConfirmationServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
         String confirmCodeInput = req.getParameter("code");
         req.setAttribute("email", email);
         req.setAttribute("address", address);

@@ -1,4 +1,4 @@
-package controller;
+package controller.user;
 
 import factory.service.ItemServiceFactory;
 import model.Item;
@@ -15,7 +15,7 @@ import java.util.List;
 @WebServlet("/user/items")
 public class UserItemsServlet extends HttpServlet {
 
-    private final ItemService itemService = ItemServiceFactory.getItemService();
+    private static final ItemService itemService = ItemServiceFactory.getItemService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

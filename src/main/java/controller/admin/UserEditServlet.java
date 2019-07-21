@@ -1,4 +1,4 @@
-package controller;
+package controller.admin;
 
 import factory.service.UserServiceFactory;
 import model.User;
@@ -14,7 +14,7 @@ import java.io.IOException;
 @WebServlet(value = "/admin/userEdit")
 public class UserEditServlet extends HttpServlet {
 
-    private final UserService userService = UserServiceFactory.getUserService();
+    private static final UserService userService = UserServiceFactory.getUserService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -30,6 +30,7 @@ public class UserEditServlet extends HttpServlet {
         Long id = Long.valueOf(req.getParameter("id"));
         User userToEdit = userService.getUser(id);
         String email = userToEdit.getEmail();
+        String newEmail = req.getParameter("email");
         String password = req.getParameter("password");
         String repeatPassword = req.getParameter("repeatPassword");
         String role = req.getParameter("role");
@@ -40,8 +41,8 @@ public class UserEditServlet extends HttpServlet {
             req.getRequestDispatcher("/userEdit.jsp").forward(req, resp);
         } else {
             if (password.equals(repeatPassword)) {
-                User newUser = new User(id, email, password, role);
-                userService.update(userService.getUser(id), newUser);
+                User newUser = new User(newEmail, password, role);
+                userService.update(userToEdit, newUser);
                 resp.sendRedirect("/admin/users");
             } else {
                 req.setAttribute("email", email);

@@ -17,6 +17,9 @@
     <a href="/admin/items">List of all items</a> <br>
     <form action="/logout" method="post">
         <button type="submit">Logout</button>
+    </form><br>
+    <form action="/admin/users" method="post">
+        <button type="submit">Refresh</button>
     </form>
     <table border="1">
         <tr>Email</tr>

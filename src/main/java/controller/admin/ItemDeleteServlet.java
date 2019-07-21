@@ -1,4 +1,4 @@
-package controller;
+package controller.admin;
 
 import factory.service.ItemServiceFactory;
 import service.ItemService;
@@ -13,7 +13,7 @@ import java.io.IOException;
 @WebServlet(value = "/admin/itemDelete")
 public class ItemDeleteServlet extends HttpServlet {
 
-    private final ItemService itemService = ItemServiceFactory.getItemService();
+    private static final ItemService itemService = ItemServiceFactory.getItemService();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)

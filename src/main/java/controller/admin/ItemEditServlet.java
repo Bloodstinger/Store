@@ -1,4 +1,4 @@
-package controller;
+package controller.admin;
 
 import factory.service.ItemServiceFactory;
 import model.Item;
@@ -14,7 +14,7 @@ import java.io.IOException;
 @WebServlet(value = "/admin/itemEdit")
 public class ItemEditServlet extends HttpServlet {
 
-    private final ItemService itemService = ItemServiceFactory.getItemService();
+    private static final ItemService itemService = ItemServiceFactory.getItemService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

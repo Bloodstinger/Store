@@ -1,4 +1,4 @@
-package controller;
+package controller.admin;
 
 import factory.service.ItemServiceFactory;
 import model.Item;
@@ -15,7 +15,7 @@ import java.util.List;
 @WebServlet("/admin/items")
 public class AdminItemsServlet extends HttpServlet {
 
-    private final ItemService itemService = ItemServiceFactory.getItemService();
+    private static final ItemService itemService = ItemServiceFactory.getItemService();
 
 
     @Override

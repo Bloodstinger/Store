@@ -1,4 +1,4 @@
-package controller;
+package controller.admin;
 
 import factory.service.UserServiceFactory;
 import model.User;
@@ -17,12 +17,13 @@ import java.util.Optional;
 @WebServlet(value = "/admin/users")
 public class UsersServlet extends HttpServlet {
 
-    private final UserService userService = UserServiceFactory.getUserService();
-    private List<User> allUsers = userService.getAll();
+    private static final UserService userService = UserServiceFactory.getUserService();
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+        List<User> allUsers = userService.getAll();
         req.setAttribute("allUsers", allUsers);
         req.getRequestDispatcher("/users.jsp").forward(req, resp);
     }

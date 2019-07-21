@@ -5,9 +5,19 @@ import java.util.ArrayList;
 public class ShoppingCart {
 
     private ArrayList<Item> items;
+    private User user;
 
-    ShoppingCart() {
+    public ShoppingCart(User user) {
+        this.user = user;
         items = new ArrayList<>();
+    }
+
+    public long getUserId() {
+        return user.getId();
+    }
+
+    public User getUser() {
+        return user;
     }
 
     public void add(Item item) {
@@ -22,7 +32,7 @@ public class ShoppingCart {
         return items.size();
     }
 
-    public ArrayList getAll() {
+    public ArrayList<Item> getAll() {
         return this.items;
     }
 }

@@ -15,7 +15,7 @@
 <form action="/admin/additem" method="post">
     Name <input type="text" name="name"> <br>
     Description <input type="text" name="description"><br>
-    Price <input type="number" name="price" value="0"><br>
+    Price <input type="number" step="0.01" name="price" value="0"><br>
     <input type="submit" value="Add new item "> <br>
     <input type="submit" formaction="/admin/items" formmethod="get" value="List of all items">
 </form>
