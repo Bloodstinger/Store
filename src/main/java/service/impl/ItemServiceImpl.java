@@ -27,12 +27,12 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public void removeItem(Long id) {
-        itemDao.removeItem(id);
+    public void removeItem(Item item) {
+        itemDao.removeItem(item);
     }
 
     @Override
-    public void update(Item oldItem, Item newItem) {
-        itemDao.replaceItem(oldItem, newItem);
+    public void update(Item item) {
+        itemDao.replaceItem(item);
     }
 }

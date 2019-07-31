@@ -1,6 +1,7 @@
 package controller.admin;
 
 import factory.service.UserServiceFactory;
+import model.User;
 import service.UserService;
 
 import javax.servlet.ServletException;
@@ -18,8 +19,9 @@ public class UserDeleteServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        String id = req.getParameter("delete");
-        userService.removeUser(Long.parseLong(id));
+        Long id = Long.valueOf(req.getParameter("delete"));
+        User userToDelete = userService.getUserById(id);
+        userService.removeUser(userToDelete);
         resp.setStatus(HttpServletResponse.SC_OK);
         resp.sendRedirect("/admin/users");
     }

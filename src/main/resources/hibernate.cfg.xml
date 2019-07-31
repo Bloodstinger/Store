@@ -4,15 +4,23 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-        <property name="connection.url">jdbc:mysql://localhost:3306/shop</property>
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-        <mapping class="dao.hibernate.ItemsEntity"/>
-        <mapping resource="dao/hibernate/ItemsEntity.hbm.xml"/>
-        <mapping class="dao.hibernate.OrderEntity"/>
-        <mapping resource="dao/hibernate/OrderEntity.hbm.xml"/>
-        <mapping class="dao.hibernate.UsersEntity"/>
-        <mapping resource="dao/hibernate/UsersEntity.hbm.xml"/>
-
+        <property name="connection.url">jdbc:mysql://localhost:3306/shop</property>
+        <property name="connection.username">root</property>
+        <property name="connection.password">Root1</property>
+        <property name="connection.pool_size">10</property>
+        <property name="hibernate.hbm2ddl.auto">create-drop</property>
+        <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
+        <property name="show_sql">true</property>
+        <property name="current_session_context_class">thread</property>
+        <property name="hibernate.dbcp.initialSize">5</property>
+        <property name="hibernate.dbcp.maxTotal">20</property>
+        <property name="hibernate.dbcp.maxIdle">10</property>
+        <property name="hibernate.dbcp.minIdle">5</property>
+        <property name="hibernate.dbcp.maxWaitMillis">-1</property>
+        <mapping class="model.User"/>
+        <mapping class="model.Item"/>
+        <mapping class="model.ShoppingCart"/>
+        <mapping class="model.Order"/>
     </session-factory>
 </hibernate-configuration>

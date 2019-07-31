@@ -1,7 +1,7 @@
 package factory.dao;
 
 import dao.UserDao;
-import dao.impl.UserDAOImpl;
+import dao.impl.Hibernate.UserDaoHibImpl;
 
 public class UserDaoFactory {
 
@@ -16,7 +16,7 @@ public class UserDaoFactory {
             synchronized (UserDao.class) {
                 localUserDao = userDAO;
                 if (localUserDao == null) {
-                    userDAO = localUserDao = new UserDAOImpl();
+                    userDAO = localUserDao = new UserDaoHibImpl();
                 }
             }
         }

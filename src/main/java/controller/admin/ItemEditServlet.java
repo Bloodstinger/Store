@@ -20,10 +20,11 @@ public class ItemEditServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         Long id = Long.valueOf(req.getParameter("id"));
+        Item item = itemService.getItem(id);
         req.setAttribute("id", id);
-        req.setAttribute("name", itemService.getItem(id).getName());
-        req.setAttribute("description", itemService.getItem(id).getDescription());
-        req.setAttribute("price", itemService.getItem(id).getPrice());
+        req.setAttribute("name", item.getName());
+        req.setAttribute("description", item.getDescription());
+        req.setAttribute("price", item.getPrice());
         req.getRequestDispatcher("/itemEdit.jsp").forward(req, resp);
     }
 
@@ -34,8 +35,11 @@ public class ItemEditServlet extends HttpServlet {
         String name = req.getParameter("name");
         String description = req.getParameter("description");
         Double price = Double.valueOf(req.getParameter("price"));
-        Item newItem = new Item(id, name, description, price);
-        itemService.update(itemService.getItem(id), newItem);
+        Item itemToUpdate = itemService.getItem(id);
+        itemToUpdate.setName(name);
+        itemToUpdate.setDescription(description);
+        itemToUpdate.setPrice(price);
+        itemService.update(itemToUpdate);
         resp.sendRedirect("/admin/items");
     }
 }

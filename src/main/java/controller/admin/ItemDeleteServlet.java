@@ -1,6 +1,7 @@
 package controller.admin;
 
 import factory.service.ItemServiceFactory;
+import model.Item;
 import service.ItemService;
 
 import javax.servlet.ServletException;
@@ -19,7 +20,8 @@ public class ItemDeleteServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         String id = req.getParameter("delete");
-        itemService.removeItem(Long.parseLong(id));
+        Item itemToRemove = itemService.getItem(Long.parseLong(id));
+        itemService.removeItem(itemToRemove);
         resp.setStatus(HttpServletResponse.SC_OK);
         resp.sendRedirect("/admin/items");
     }

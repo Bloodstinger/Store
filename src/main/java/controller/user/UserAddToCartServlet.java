@@ -1,10 +1,12 @@
 package controller.user;
 
 import factory.service.ItemServiceFactory;
+import factory.service.ShoppingCartServiceFactory;
 import model.Item;
 import model.ShoppingCart;
 import model.User;
 import service.ItemService;
+import service.ShoppingCartService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,16 +19,18 @@ import java.io.IOException;
 public class UserAddToCartServlet extends HttpServlet {
 
     private static final ItemService itemService = ItemServiceFactory.getItemService();
+    private static final ShoppingCartService shoppingCartService =
+            ShoppingCartServiceFactory.getShoppingCartService();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         User user = (User) req.getSession().getAttribute("user");
-        ShoppingCart shoppingCart = (ShoppingCart) req.getSession().getAttribute("cart");
+        shoppingCartService.createShoppingCart(user);
         Long itemId = Long.valueOf(req.getParameter("id"));
         Item itemToAdd = itemService.getItem(itemId);
-        shoppingCart.add(itemToAdd);
-        req.setAttribute("count", shoppingCart.size());
+        shoppingCartService.addItem(user, itemToAdd);
+        req.setAttribute("count", shoppingCartService.getSize());
         req.getRequestDispatcher("/user/items").forward(req, resp);
     }
 }

@@ -2,33 +2,28 @@ package utils;
 
 import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
 
 public class HibernateSessionFactory {
 
-    private static Logger logger = Logger.getLogger(HibernateSessionFactory.class);
 
-    private static SessionFactory sessionFactory = buildSessionFactory();
+    private static final SessionFactory sessionFactory = buildSessionFactory();
+    private static final Logger logger = Logger.getLogger(HibernateSessionFactory.class);
 
-    protected static SessionFactory buildSessionFactory() {
-        final StandardServiceRegistry registry =
-                new StandardServiceRegistryBuilder().configure().build();
+    private HibernateSessionFactory() {
+    }
+
+    private static SessionFactory buildSessionFactory() {
         try {
-            sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
+            Configuration configuration = new Configuration();
+            return configuration.configure().buildSessionFactory();
         } catch (Exception e) {
-            StandardServiceRegistryBuilder.destroy(registry);
-            logger.error("Initialization of SessionFactory failed", e);
+            logger.error("error when try build session!", e);
         }
-        return sessionFactory;
+        return null;
     }
 
     public static SessionFactory getSessionFactory() {
         return sessionFactory;
-    }
-
-    public static void shutdown() {
-        getSessionFactory().close();
     }
 }
