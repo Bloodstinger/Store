@@ -33,9 +33,9 @@ public class UsersServlet extends HttpServlet {
             throws ServletException, IOException {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-        Optional<User> optUser = Optional.ofNullable(userService.getUser(email));
+        Optional<User> optUser = Optional.ofNullable(userService.getUserByEmail(email));
 
-        if (optUser.isPresent() && password.equals(userService.getUser(email).getPassword())) {
+        if (optUser.isPresent() && password.equals(userService.getUserByEmail(email).getPassword())) {
 
             HttpSession session = req.getSession();
             session.setAttribute("user", optUser.get());

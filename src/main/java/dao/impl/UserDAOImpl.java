@@ -82,10 +82,10 @@ public class UserDAOImpl implements UserDao {
     }
 
     @Override
-    public void removeUser(Long id) {
+    public void removeUser(User user) {
         try (Connection connection = DbConnector.connect()) {
             Statement statement = connection.createStatement();
-            String sql = String.format("DELETE FROM users WHERE id=%d", id);
+            String sql = String.format("DELETE FROM users WHERE id=%d", user.getId());
             statement.execute(sql);
         } catch (SQLException e) {
             logger.error("Problem with removing user", e);
@@ -93,11 +93,11 @@ public class UserDAOImpl implements UserDao {
     }
 
     @Override
-    public void replaceUser(User oldUser, User newUser) {
+    public void replaceUser(User user) {
         try (Connection connection = DbConnector.connect()) {
             Statement statement = connection.createStatement();
             String sql = String.format("UPDATE users SET email = '%s', password ='%s' " +
-                    "WHERE id = %d;", newUser.getEmail(), newUser.getPassword(), oldUser.getId());
+                    "WHERE id = %d;", user.getEmail(), user.getPassword(), user.getId());
             statement.execute(sql);
         } catch (SQLException e) {
             logger.error("Problem with updating user");

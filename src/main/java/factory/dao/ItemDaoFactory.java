@@ -1,7 +1,7 @@
 package factory.dao;
 
 import dao.ItemDao;
-import dao.impl.ItemDaoImpl;
+import dao.impl.Hibernate.ItemDaoHibImpl;
 
 public class ItemDaoFactory {
 
@@ -16,7 +16,7 @@ public class ItemDaoFactory {
             synchronized (ItemDao.class) {
                 localItem = itemDAO;
                 if (localItem == null) {
-                    itemDAO = localItem = new ItemDaoImpl();
+                    itemDAO = localItem = new ItemDaoHibImpl();
                 }
             }
         }

@@ -12,11 +12,11 @@ public interface UserService {
 
     List<User> getAll();
 
-    User getUser(Long id);
+    User getUserById(Long id);
 
-    User getUser(String email);
+    User getUserByEmail(String email);
 
-    void removeUser(Long id);
+    void removeUser(User user);
 
-    void update(User oldUser, User newUser);
+    void update(User user);
 }

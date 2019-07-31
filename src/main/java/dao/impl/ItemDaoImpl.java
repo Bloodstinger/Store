@@ -58,7 +58,8 @@ public class ItemDaoImpl implements ItemDao {
     }
 
     @Override
-    public void removeItem(Long id) {
+    public void removeItem(Item item) {
+        Long id = item.getId();
         try (Connection connection = DbConnector.connect()) {
             Statement statement = connection.createStatement();
             String sql = String.format("DELETE FROM items WHERE id=%d", id);
@@ -69,15 +70,15 @@ public class ItemDaoImpl implements ItemDao {
     }
 
     @Override
-    public void replaceItem(Item oldItem, Item newItem) {
+    public void replaceItem(Item item) {
         try (Connection connection = DbConnector.connect()) {
             Statement statement = connection.createStatement();
             String sql = String.format("UPDATE items SET name='%s', description='%s'," +
                             " price='%.2f' WHERE id= %d",
-                    newItem.getName(),
-                    newItem.getDescription(),
-                    newItem.getPrice(),
-                    oldItem.getId());
+                    item.getName(),
+                    item.getDescription(),
+                    item.getPrice(),
+                    item.getId());
             statement.execute(sql);
         } catch (SQLException e) {
             logger.error("Problem while replacing item in DB", e);

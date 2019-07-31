@@ -12,7 +12,7 @@ public interface ItemDao {
 
     Item getItem(Long id);
 
-    void removeItem(Long id);
+    void removeItem(Item item);
 
-    void replaceItem(Item oldItem, Item newItem);
+    void replaceItem(Item item);
 }

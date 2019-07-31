@@ -12,8 +12,8 @@ public interface ItemService {
 
     Item getItem(Long id);
 
-    void removeItem(Long id);
+    void removeItem(Item item);
 
-    void update(Item oldItem, Item newItem);
+    void update(Item item);
 
 }

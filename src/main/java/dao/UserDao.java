@@ -14,7 +14,7 @@ public interface UserDao {
 
     User getUserByEmail(String email);
 
-    void removeUser(Long id);
+    void removeUser(User user);
 
-    void replaceUser(User oldUser, User newUser);
+    void replaceUser(User user);
 }

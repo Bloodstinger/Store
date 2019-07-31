@@ -20,7 +20,7 @@ public class UserEditServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         Long id = Long.valueOf(req.getParameter("id"));
-        req.setAttribute("email", userService.getUser(id).getEmail());
+        req.setAttribute("email", userService.getUserById(id).getEmail());
         req.getRequestDispatcher("/userEdit.jsp").forward(req, resp);
     }
 
@@ -28,7 +28,7 @@ public class UserEditServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         Long id = Long.valueOf(req.getParameter("id"));
-        User userToEdit = userService.getUser(id);
+        User userToEdit = userService.getUserById(id);
         String email = userToEdit.getEmail();
         String newEmail = req.getParameter("email");
         String password = req.getParameter("password");
@@ -41,8 +41,9 @@ public class UserEditServlet extends HttpServlet {
             req.getRequestDispatcher("/userEdit.jsp").forward(req, resp);
         } else {
             if (password.equals(repeatPassword)) {
-                User newUser = new User(newEmail, password, role);
-                userService.update(userToEdit, newUser);
+                userToEdit.setEmail(newEmail);
+                userToEdit.setPassword(password);
+                userService.update(userToEdit);
                 resp.sendRedirect("/admin/users");
             } else {
                 req.setAttribute("email", email);
